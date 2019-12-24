@@ -46,7 +46,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async report (error, { request }) {
-    console.log(erro)
+    console.log(error)
   }
 }
 
