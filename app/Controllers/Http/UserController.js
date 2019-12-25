@@ -1,3 +1,4 @@
+const Database = use('Database')
 const User = use('App/Models/User')
 
 class UserController {
@@ -5,9 +6,12 @@ class UserController {
     const data = request.only(['username', 'email', 'password'])
     const addresses = request.input('addresses')
 
-    const user = await User.create(data)
+    const transaction = await Database.beginTransaction()
 
-    await user.addresses().createMany(addresses)
+    const user = await User.create(data, transaction)
+    await user.addresses().createMany(addresses, transaction)
+
+    await transaction.commit()
 
     return user
   }
